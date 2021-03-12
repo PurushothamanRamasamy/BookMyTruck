@@ -1,0 +1,37 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Book My Truck</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+        }
+        
+        .bg {
+            /* The image used */
+            background-image: url("./../../Content/images/bg.png");
+            /* Full height */
+            height: 100%;background-position: center;background-repeat: no-repeat;background-size: cover;
+        }
+    </style>
+</head>
+<body class="bg">
+        @RenderBody()
+       
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</body>
+</html>

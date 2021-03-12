@@ -1,0 +1,393 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="BookMyTruckDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="RequestId" />
+          </Key>
+          <Property Name="RequestId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerId" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="ManagerId" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="PickupCity" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DropCity" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="EstimatedStartDate" Type="date" Nullable="false" />
+          <Property Name="Distance" Type="int" Nullable="false" />
+          <Property Name="EstimatedCost" Type="float" Nullable="false" />
+          <Property Name="RequestStatus" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Service">
+          <Key>
+            <PropertyRef Name="ServiceId" />
+          </Key>
+          <Property Name="ServiceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerId" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="ManagerId" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="PickupCity" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DropCity" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ServiceStartDate" Type="date" Nullable="false" />
+          <Property Name="ServiceEndDate" Type="date" />
+          <Property Name="ServiceStatus" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="SericeCost" Type="float" Nullable="false" />
+          <Property Name="ratings" Type="int" />
+        </EntityType>
+        <EntityType Name="Truck">
+          <Key>
+            <PropertyRef Name="TruckNumber" />
+          </Key>
+          <Property Name="TruckNumber" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="TruckType" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="ManagerId" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="DriverName" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="DriverLicenceNumber" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="PickCity" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="DropCity" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="MaxCapacity" Type="int" Nullable="false" />
+          <Property Name="CostPerKM" Type="float" Nullable="false" />
+          <Property Name="TruckStatus" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="Mobile" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="UserId" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="DisplayName" Type="varchar" MaxLength="25" />
+          <Property Name="UserRole" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="UserStatus" Type="bit" />
+          <Property Name="Password" Type="varchar" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Request__Custome__4BAC3F29">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Request__Manager__4CA06362">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="ManagerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Service__Custome__45F365D3">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Service" Type="Self.Service" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Service">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Service__Manager__46E78A0C">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Service" Type="Self.Service" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Service">
+              <PropertyRef Name="ManagerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Truck__ManagerId__403A8C7D">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Truck" Type="Self.Truck" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Truck">
+              <PropertyRef Name="ManagerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BookMyTruckDBModelStoreContainer">
+          <EntitySet Name="Request" EntityType="Self.Request" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Service" EntityType="Self.Service" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Truck" EntityType="Self.Truck" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Request__Custome__4BAC3F29" Association="Self.FK__Request__Custome__4BAC3F29">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Request__Manager__4CA06362" Association="Self.FK__Request__Manager__4CA06362">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Service__Custome__45F365D3" Association="Self.FK__Service__Custome__45F365D3">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Service" EntitySet="Service" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Service__Manager__46E78A0C" Association="Self.FK__Service__Manager__46E78A0C">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Service" EntitySet="Service" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Truck__ManagerId__403A8C7D" Association="Self.FK__Truck__ManagerId__403A8C7D">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Truck" EntitySet="Truck" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BookMyTruckDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="RequestId" />
+          </Key>
+          <Property Name="RequestId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ManagerId" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PickupCity" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DropCity" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EstimatedStartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Distance" Type="Int32" Nullable="false" />
+          <Property Name="EstimatedCost" Type="Double" Nullable="false" />
+          <Property Name="RequestStatus" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Request__Custome__4BAC3F29" FromRole="Request" ToRole="Users" />
+          <NavigationProperty Name="User1" Relationship="Self.FK__Request__Manager__4CA06362" FromRole="Request" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Service">
+          <Key>
+            <PropertyRef Name="ServiceId" />
+          </Key>
+          <Property Name="ServiceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ManagerId" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PickupCity" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DropCity" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ServiceStartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ServiceEndDate" Type="DateTime" Precision="0" />
+          <Property Name="ServiceStatus" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SericeCost" Type="Double" Nullable="false" />
+          <Property Name="ratings" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Service__Custome__45F365D3" FromRole="Service" ToRole="Users" />
+          <NavigationProperty Name="User1" Relationship="Self.FK__Service__Manager__46E78A0C" FromRole="Service" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Truck">
+          <Key>
+            <PropertyRef Name="TruckNumber" />
+          </Key>
+          <Property Name="TruckNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TruckType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ManagerId" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DriverName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DriverLicenceNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PickCity" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DropCity" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MaxCapacity" Type="Int32" Nullable="false" />
+          <Property Name="CostPerKM" Type="Double" Nullable="false" />
+          <Property Name="TruckStatus" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Truck__ManagerId__403A8C7D" FromRole="Truck" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="Mobile" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DisplayName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="UserRole" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserStatus" Type="Boolean" />
+          <Property Name="Password" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Requests" Relationship="Self.FK__Request__Custome__4BAC3F29" FromRole="Users" ToRole="Request" />
+          <NavigationProperty Name="Requests1" Relationship="Self.FK__Request__Manager__4CA06362" FromRole="Users" ToRole="Request" />
+          <NavigationProperty Name="Services" Relationship="Self.FK__Service__Custome__45F365D3" FromRole="Users" ToRole="Service" />
+          <NavigationProperty Name="Services1" Relationship="Self.FK__Service__Manager__46E78A0C" FromRole="Users" ToRole="Service" />
+          <NavigationProperty Name="Trucks" Relationship="Self.FK__Truck__ManagerId__403A8C7D" FromRole="Users" ToRole="Truck" />
+        </EntityType>
+        <Association Name="FK__Request__Custome__4BAC3F29">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Request__Manager__4CA06362">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="ManagerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Service__Custome__45F365D3">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Service" Type="Self.Service" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Service">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Service__Manager__46E78A0C">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Service" Type="Self.Service" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Service">
+              <PropertyRef Name="ManagerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Truck__ManagerId__403A8C7D">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Truck" Type="Self.Truck" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Truck">
+              <PropertyRef Name="ManagerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BookMyTruckDBcontext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Requests" EntityType="Self.Request" />
+          <EntitySet Name="Services" EntityType="Self.Service" />
+          <EntitySet Name="Trucks" EntityType="Self.Truck" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK__Request__Custome__4BAC3F29" Association="Self.FK__Request__Custome__4BAC3F29">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Request" EntitySet="Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Request__Manager__4CA06362" Association="Self.FK__Request__Manager__4CA06362">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Request" EntitySet="Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Service__Custome__45F365D3" Association="Self.FK__Service__Custome__45F365D3">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Service" EntitySet="Services" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Service__Manager__46E78A0C" Association="Self.FK__Service__Manager__46E78A0C">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Service" EntitySet="Services" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Truck__ManagerId__403A8C7D" Association="Self.FK__Truck__ManagerId__403A8C7D">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Truck" EntitySet="Trucks" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BookMyTruckDBModelStoreContainer" CdmEntityContainer="BookMyTruckDBcontext">
+          <EntitySetMapping Name="Requests">
+            <EntityTypeMapping TypeName="BookMyTruckDBModel.Request">
+              <MappingFragment StoreEntitySet="Request">
+                <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
+                <ScalarProperty Name="PickupCity" ColumnName="PickupCity" />
+                <ScalarProperty Name="DropCity" ColumnName="DropCity" />
+                <ScalarProperty Name="EstimatedStartDate" ColumnName="EstimatedStartDate" />
+                <ScalarProperty Name="Distance" ColumnName="Distance" />
+                <ScalarProperty Name="EstimatedCost" ColumnName="EstimatedCost" />
+                <ScalarProperty Name="RequestStatus" ColumnName="RequestStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Services">
+            <EntityTypeMapping TypeName="BookMyTruckDBModel.Service">
+              <MappingFragment StoreEntitySet="Service">
+                <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
+                <ScalarProperty Name="PickupCity" ColumnName="PickupCity" />
+                <ScalarProperty Name="DropCity" ColumnName="DropCity" />
+                <ScalarProperty Name="ServiceStartDate" ColumnName="ServiceStartDate" />
+                <ScalarProperty Name="ServiceEndDate" ColumnName="ServiceEndDate" />
+                <ScalarProperty Name="ServiceStatus" ColumnName="ServiceStatus" />
+                <ScalarProperty Name="SericeCost" ColumnName="SericeCost" />
+                <ScalarProperty Name="ratings" ColumnName="ratings" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Trucks">
+            <EntityTypeMapping TypeName="BookMyTruckDBModel.Truck">
+              <MappingFragment StoreEntitySet="Truck">
+                <ScalarProperty Name="TruckNumber" ColumnName="TruckNumber" />
+                <ScalarProperty Name="TruckType" ColumnName="TruckType" />
+                <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
+                <ScalarProperty Name="DriverName" ColumnName="DriverName" />
+                <ScalarProperty Name="DriverLicenceNumber" ColumnName="DriverLicenceNumber" />
+                <ScalarProperty Name="PickCity" ColumnName="PickCity" />
+                <ScalarProperty Name="DropCity" ColumnName="DropCity" />
+                <ScalarProperty Name="MaxCapacity" ColumnName="MaxCapacity" />
+                <ScalarProperty Name="CostPerKM" ColumnName="CostPerKM" />
+                <ScalarProperty Name="TruckStatus" ColumnName="TruckStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="BookMyTruckDBModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="UserRole" ColumnName="UserRole" />
+                <ScalarProperty Name="UserStatus" ColumnName="UserStatus" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="35b2f146cf944b28af4606100ae2d3c9" Name="Diagram1">
+        <EntityTypeShape EntityType="BookMyTruckDBModel.Request" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookMyTruckDBModel.Service" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookMyTruckDBModel.Truck" Width="1.5" PointX="3" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookMyTruckDBModel.User" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <AssociationConnector Association="BookMyTruckDBModel.FK__Request__Custome__4BAC3F29" ManuallyRouted="false" />
+        <AssociationConnector Association="BookMyTruckDBModel.FK__Request__Manager__4CA06362" ManuallyRouted="false" />
+        <AssociationConnector Association="BookMyTruckDBModel.FK__Service__Custome__45F365D3" ManuallyRouted="false" />
+        <AssociationConnector Association="BookMyTruckDBModel.FK__Service__Manager__46E78A0C" ManuallyRouted="false" />
+        <AssociationConnector Association="BookMyTruckDBModel.FK__Truck__ManagerId__403A8C7D" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

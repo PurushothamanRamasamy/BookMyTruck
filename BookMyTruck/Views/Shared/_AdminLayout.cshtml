@@ -1,0 +1,64 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+</head>
+<body style="background-color: #f2f2f2">
+    <div class="container-fluid" style="margin-top:-50px !important;">
+        <div class="row">
+            @*#150941*@
+            <div class="col-2 px-1 position-fixed" id="sticky-sidebar" style="margin-bottom:10px !important;border-radius:10px;margin:10px;background-image:url('./../../Content/images/sidenavbg.png');height: 96%;background-position: center;background-repeat: no-repeat;background-size: cover;">
+                <div class="nav flex-column flex-nowrap vh-100 overflow-auto text-white p-2" style="margin-top:10px">
+                    <p class="text-light text-center" style="margin-top:10px">Welcome</p>
+                    <h4 class="text-danger text-center">
+                        Admin
+                    </h4>
+                    <div class="text-light" style="margin-top:20px">
+                        <hr style="background-color:white !important"/>  
+                    </div>
+
+                    @*<div href="./" class="nav-link">Link</div>
+                    <div href="./" class="nav-link">Link</div>
+                    <div href="./" class="nav-link">Link</div>
+                    <div href="./" class="nav-link">Link</div>
+                    <div href="./" class="nav-link">Link</div>
+                   *@
+                </div>
+
+            </div>
+                <div class="col-10 offset-2" id="main">
+                    <nav class="navbar justify-content-end" style="margin-left:5px;margin-top:10px;margin-right:-10px;background-color: #150941;padding:10px;border-radius:10px">
+                       
+                        <ul class="nav ">
+
+                           
+                            <li class="nav-item" style="margin-right:50px">
+                                <button type="button" class="btn btn-danger">
+                                    Notifications <span class="badge badge-light">7</span>
+                                </button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="btn btn-light">Logout</button>
+                            </li>
+                        </ul>
+
+                    </nav>
+                    <div class="card" style="margin-top:50px;margin-left:10px;background-color:#ffffff;padding:20px">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+    </div>
+</body>
+</html>
