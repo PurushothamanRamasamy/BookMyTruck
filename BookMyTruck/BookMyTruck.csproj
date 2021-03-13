@@ -265,6 +265,7 @@
     <Compile Include="Models\DropDown.cs" />
     <Compile Include="Models\GetCustomerPlaces.cs" />
     <Compile Include="Models\Login.cs" />
+    <Compile Include="Models\Message.cs" />
     <Compile Include="Models\UserMobile.cs" />
     <Compile Include="Models\UserRegister.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -291,9 +292,9 @@
     <Content Include="Views\Shared\_LoginandRegisterLayout.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\ValidateUser.cshtml" />
-    <Content Include="Views\Home\Getmobile.cshtml" />
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Scripts\modernizr-2.8.3.min.js" />
+    <Content Include="Views\Home\DisplayMessage.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

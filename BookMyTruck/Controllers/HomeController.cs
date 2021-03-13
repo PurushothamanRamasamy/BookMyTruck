@@ -81,26 +81,45 @@ namespace BookMyTruck.Controllers
         {
             UserRegister registeruser = new UserRegister();
             registeruser.Mobile = mobile;
+            ViewBag.ddlRoles = dropdownlist.RoleList;
             return View(registeruser);
         }
         [HttpPost]
-        public ActionResult Register(UserRegister registereduser)
+        public ActionResult Register(UserRegister registeredUser)
         {
-            if(ModelState.IsValid)
+
+            //return registeredUser.Mobile + " " + registeredUser.DisplayName + " " + registeredUser.Password + " " + registeredUser.UserRole + " " + registeredUser.ConfirmPassword;
+            if (ModelState.IsValid)
             {
                 try
                 {
-                    User adduser = new User();
-                    adduser.Mobile = registereduser.Mobile;
-                    adduser.UserId = registereduser.DisplayName +registereduser.Mobile;
-                    adduser.DisplayName = registereduser.DisplayName;
-                    adduser.UserRole = registereduser.UserRole;
-                    adduser.UserStatus = false;
-                    adduser.Password = registereduser.Password;
-                    
+                    if (registeredUser.UserRole == "Book Truck")
+                    {
+                        User adduser = new User();
+                        adduser.Mobile = registeredUser.Mobile;
+                        adduser.UserId = registeredUser.DisplayName + registeredUser.Mobile;
+                        adduser.DisplayName = registeredUser.DisplayName;
+                        adduser.UserRole = "customer";
+                        adduser.UserStatus = true;
+                        adduser.Password = registeredUser.Password;
+                        db.Users.Add(adduser);
+                        db.SaveChanges();
+                        return RedirectToAction("DisplayMessage", new { msg = "Succefully Registered", act = "Index" });
+                    }
+                    if (registeredUser.UserRole == "Add My Truck")
+                    {
+                        User adduser = new User();
+                        adduser.Mobile = registeredUser.Mobile;
+                        adduser.UserId = registeredUser.DisplayName + registeredUser.Mobile;
+                        adduser.DisplayName = registeredUser.DisplayName;
+                        adduser.UserRole = "Manager";
+                        adduser.UserStatus = false;
+                        adduser.Password = registeredUser.Password;
+                        db.Users.Add(adduser);
+                        db.SaveChanges();
 
-                    db.Users.Add(adduser);
-                    db.SaveChanges();
+                        return RedirectToAction("DisplayMessage", new { message = "Your request will be approved soon. Kindly keep check on notification we will notify you", action = "Home/Index" });
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -110,6 +129,15 @@ namespace BookMyTruck.Controllers
             }
             return View();
         }
+
+        public ActionResult DisplayMessage(string msg, string act)
+        {
+            Message message = new Message();
+            message.DispalyMessage = msg;
+            message.ToAction = act;
+            return View(message);
+        }
+
         public bool IsUserAlreadyExists(string Mobile)
         {
 

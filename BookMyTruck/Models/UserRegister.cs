@@ -8,18 +8,23 @@ namespace BookMyTruck.Models
 {
     public class UserRegister
     {
-        [Required (ErrorMessage ="Mobile Number is Required")]
+
         [DataType(DataType.PhoneNumber,ErrorMessage ="Invalid Mobile Number")]
         public string Mobile { get; set; }
 
-        [Required(ErrorMessage = "Name is Required")]
-        [Display (Name = " Enter your name Name")]
+        [Display (Name = "Name")]
         public string DisplayName { get; set; }
 
-        
+
+        [Display (Name ="Are you Looking for ?")]
         public string UserRole { get; set; }
-        [Required(ErrorMessage = "Password is Required")]
-        [Display(Name = "Enter Password")]
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
         public string Password { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm Password")]
+        public string ConfirmPassword { get; set; }
     }
 }

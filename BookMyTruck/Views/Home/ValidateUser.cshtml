@@ -10,16 +10,30 @@
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript">
-
+<script type="text/javascript"> 
     $(document).ready(function () {
+        $("#txtLoginpassword").keypress(function () { $("#errorpassword").html(""); });
+        $("#txtMobile").keypress(function () { $("#errormobile").html(""); $("#credentialsError").html("") });
+        
+        $("#btnpassword").click(function () {
+
+            if ($("#txtLoginpassword").val().length != 0) {
+                $("#btnsubmit").click();
+            }
+            else {
+                $("#errorpassword").html("Password Cannot be Empty");
+            }
+        });
         $("#btnnext").click(function () {
-            $("#errormobile").html = "";
-                var mobile = $("#txtMobile").val();
+            
+            
+            var mobile = $("#txtMobile").val();
+            
                 if (mobile.length != 0) {
                     var regex = /^[6-9]{1}[0-9]{9}$/;
                     if (regex.test(mobile) != false) {
                         $("#btnnext").hide();
+                        $("#loading").show();
                         $("#mobDiv").hide();
                         $.ajax({
                             type: "POST",
@@ -30,9 +44,11 @@
                             success: function (val) {
                                 if (val.length != 0) {
                                     //alert(val)
+
                                     LoadPassword();
                                 }
                                 else {
+                                    
                                     LoadRegister(mobile);
                                 }
 
@@ -54,11 +70,14 @@
         });
     });
 
-    function LoadPassword() {
+    
 
+    function LoadPassword() {
+        $("#loading").hide();
         $('#datatoapppend').show();
         }
     function LoadRegister(mobile) {
+        $("#loading").hide();
         $('#LoadPartial div').remove();
         $('#LoadPartial').load('/Home/Register?mobile=' + mobile);
     }
