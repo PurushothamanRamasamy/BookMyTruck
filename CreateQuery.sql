@@ -2,7 +2,7 @@ Create database BookMyTruckDB
 
 use BookMyTruckDB
 
-
+insert into Users values('9344418426','Admin','Admin','Admin',1,'admin')
 create table Users(
 Mobile varchar(10) not null unique ,
 UserId varchar(35) not null Primary key,

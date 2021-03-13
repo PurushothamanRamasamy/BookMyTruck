@@ -20,16 +20,48 @@
         }
         
         .bg {
-            /* The image used */
+            
             background-image: url("./../../Content/images/bg.png");
-            /* Full height */
+            
             height: 100%;background-position: center;background-repeat: no-repeat;background-size: cover;
         }
     </style>
 </head>
 <body class="bg">
-        @RenderBody()
-       
+    <div class="container" style="margin-top:-40px">
+        <nav class="navbar justify-content-end" style="background-color:white ;padding:10px;border-radius:10px">
+
+            <ul class="nav ">
+                <li class="nav-item" style="margin-right:50px">
+                    <button type="button" class="btn btn-danger">
+                        Notifications <span class="badge badge-light">7</span>
+                    </button>
+                </li>
+                <li class="nav-item" style="margin-right:300px">
+
+                </li>
+                <li class="nav-item" style="margin-right:50px">
+
+                </li>
+                <li class="nav-item" style="margin-right:50px">
+                    <button type="button" class="btn btn-danger">
+                        Notifications <span class="badge badge-light">7</span>
+                    </button>
+                </li>
+                <li class="nav-item">
+                    
+                        <a href="~/Home/ValidateUser" class="btn" style="background-color:#150941;color:white" >Login</a>
+                    
+                </li>
+            </ul>
+
+        </nav>
+        <div class="container" style="margin-top:50px;margin-left:10px;padding:20px">
+            @RenderBody()
+        </div>
+    </div>
+   
+
 
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>

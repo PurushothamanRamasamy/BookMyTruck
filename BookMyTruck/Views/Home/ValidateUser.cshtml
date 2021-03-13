@@ -1,0 +1,66 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_LoginandRegisterLayout.cshtml";
+}
+
+<div class="container" id="LoadPartial">
+    @{
+        Html.RenderPartial("Login");
+    }
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#btnnext").click(function () {
+            $("#errormobile").html = "";
+                var mobile = $("#txtMobile").val();
+                if (mobile.length != 0) {
+                    var regex = /^[6-9]{1}[0-9]{9}$/;
+                    if (regex.test(mobile) != false) {
+                        $("#btnnext").hide();
+                        $("#mobDiv").hide();
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("IsUser")',
+                            data: '{Mobile:' + JSON.stringify(mobile) + '}',
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function (val) {
+                                if (val.length != 0) {
+                                    //alert(val)
+                                    LoadPassword();
+                                }
+                                else {
+                                    LoadRegister(mobile);
+                                }
+
+                            },
+                            error: function (ex) {
+                                $("#errormobile").html("Error while fetching data try after sometime");
+                            }
+                        });
+                    }
+                    else {
+                        $("#errormobile").html("Invalid Mobile Number")
+                    }
+
+                }
+                else {
+                    $("#errormobile").html("Mobile Number Cannot be Empty")
+                }
+            return false;
+        });
+    });
+
+    function LoadPassword() {
+
+        $('#datatoapppend').show();
+        }
+    function LoadRegister(mobile) {
+        $('#LoadPartial div').remove();
+        $('#LoadPartial').load('/Home/Register?mobile=' + mobile);
+    }
+</script>
+

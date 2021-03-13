@@ -8,12 +8,13 @@ namespace BookMyTruck.Models
 {
     public class Login
     {
-        [Required (ErrorMessage ="Mobile Number is Required")]
-        [DataType(DataType.PhoneNumber,ErrorMessage ="Invalid number")]
-        [Display (Name ="Mobile Number")]
+
+        [Required]
+        [RegularExpression("^[6-9]{1}[0-9]{9}$",ErrorMessage ="Invalid Mobile Number")]
+        [Display(Name = "Mobile Number")]
         public string Mobile { get; set; }
 
-        [Required(ErrorMessage = "Password is Required")]
+        [Required ]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }

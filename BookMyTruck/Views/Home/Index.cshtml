@@ -10,8 +10,11 @@
 
 @using (Html.BeginForm())
 {
+
     @Html.AntiForgeryToken()
-    <div class="container" style="margin-top:200px">
+
+    
+    <div class="container" style="margin-top:150px">
         <div class="row">
             <div class="col-7"></div>
             <div class="col-5">
@@ -66,4 +69,6 @@
     var input = document.getElementById('txtDestination');
     var txtDestination = new google.maps.places.Autocomplete(input);
 
+@*    function noback() { Window.history.forward() }
+*@
 </script>

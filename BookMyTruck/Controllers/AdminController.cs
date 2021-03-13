@@ -13,8 +13,15 @@ namespace BookMyTruck.Controllers
         [Route("{Admindashboard}")]
         public ActionResult Index()
         {
-            List<Service> services = new List<Service>();
-            return View(services);
+            if (Session["UserId"] != null)
+            {
+                List<Service> services = new List<Service>();
+                return View(services);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
     }
 }
