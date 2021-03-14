@@ -21,9 +21,10 @@ namespace BookMyTruck
         public string DriverLicenceNumber { get; set; }
         public string PickCity { get; set; }
         public string DropCity { get; set; }
-        public int MaxCapacity { get; set; }
+        public double MaxCapacity { get; set; }
         public double CostPerKM { get; set; }
         public bool TruckStatus { get; set; }
+        public bool BookedStatus { get; set; }
     
         public virtual User User { get; set; }
     }

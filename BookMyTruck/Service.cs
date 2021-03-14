@@ -24,6 +24,8 @@ namespace BookMyTruck
         public string ServiceStatus { get; set; }
         public double SericeCost { get; set; }
         public Nullable<int> ratings { get; set; }
+        public string TruckNumber { get; set; }
+        public string Description { get; set; }
     
         public virtual User User { get; set; }
         public virtual User User1 { get; set; }

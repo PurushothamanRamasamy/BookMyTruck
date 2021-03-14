@@ -1,0 +1,85 @@
+﻿@model IEnumerable<BookMyTruck.Request>
+
+@{
+    ViewBag.Title = "MyBookings";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+
+
+<div style="margin-top:100px;padding:20px;border-radius:10px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;" class="card">
+    <h2 class="text-center" style="margin-bottom:50px">My Bookings</h2>
+    <table class="table table-striped">
+        <tr class="bg-danger text-light font-weight-bold">
+            <th>
+                @Html.DisplayNameFor(model => model.TruckNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PickupCity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DropCity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EstimatedCost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RequestStatus)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+
+        </tr>
+
+        @foreach (var item in Model)
+        {
+    <tr>
+        <td class="text-uppercase">
+            @Html.DisplayFor(modelItem => item.TruckNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PickupCity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DropCity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EstimatedCost)
+        </td>
+        <td>
+            @{
+                if (item.RequestStatus)
+                {
+                    <p class="text-success">Accepted</p>
+                }
+                else
+                {
+                    <p class="text-warning">Requested</p>
+                }
+            }
+
+        </td>
+        <td>
+            @{
+                if (item.Description == "Your Booking is under Processing")
+                {
+                    @Html.DisplayFor(modelItem => item.Description)
+                }
+                else
+                {
+                     <p class="text-danger">
+                        @Html.DisplayFor(modelItem => item.Description) 
+                     </p>
+                }
+            }
+
+        </td>
+
+    </tr>
+        }
+
+    </table>
+
+</div>

@@ -1,5 +1,8 @@
-﻿using System;
+﻿using BookMyTruck.Models;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -8,10 +11,305 @@ namespace BookMyTruck.Controllers
 {
     public class ManagerController : Controller
     {
+        readonly BookMyTruckDBcontext db = new BookMyTruckDBcontext();
+        readonly DropDown dropdownlist = new DropDown();
         // GET: Manager
         public ActionResult Index()
         {
+            if (Session["UserId"]!=null && Session["UserRole"].ToString()== "manager")
+            {
+                string MngrId = Session["UserId"].ToString();
+                List<Truck> trucks = db.Trucks.Where(truck=>truck.ManagerId== MngrId).ToList();
+                List<Request> bookingrRequests = db.Requests.Where(req => req.ManagerId==MngrId && req.RequestStatus==false&&req.AcceptStatus==false).ToList();
+                TempData["bookingrRequests"] = bookingrRequests.Count();
+                return View(trucks);
+            }
+            else
+            {
+                return RedirectToAction("Index","Home");
+            }
+        }
+        public ActionResult AddTruck()
+        {
+            if (Session["UserId"] != null && Session["UserRole"].ToString() == "manager")
+            {
+                Truck truck = new Truck();
+                truck.ManagerId = Session["UserId"].ToString();
+                ViewBag.ddlTruckType = dropdownlist.TruckTypeList;
+                return View(truck);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+        [HttpPost]
+        public ActionResult AddTruck(Truck addtruck)
+        {
+            if (Session["UserId"] != null && Session["UserRole"].ToString() == "manager")
+            {
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+
+                        addtruck.TruckStatus = false;
+                        addtruck.BookedStatus = false;
+                        db.Trucks.Add(addtruck);
+                       
+                        db.SaveChanges();
+                        return RedirectToAction("DisplayMessage", "Home", new { msg = "Your truck added suuccessfully,kindly enable your truck to provide Service", act = "Index", ctrl = "Manager", isinput = false, });
+                    }
+                    catch (DbEntityValidationException e)
+                    {
+                        foreach (var eve in e.EntityValidationErrors)
+                        {
+                            Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                                eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                            foreach (var ve in eve.ValidationErrors)
+                            {
+                                Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                                    ve.PropertyName, ve.ErrorMessage);
+                            }
+                        }
+                        throw;
+                    }
+
+                }
+                ViewBag.ddlTruckType = dropdownlist.TruckTypeList;
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+        public ActionResult UpdateTruck(string id)
+        {
+            ViewBag.ddlTruckType = dropdownlist.TruckTypeList;
+            if (Session["UserId"] != null && Session["UserRole"].ToString() == "manager")
+            {
+                string mngrId = Session["UserId"].ToString();
+                Truck truck = db.Trucks.FirstOrDefault(trk => trk.ManagerId == mngrId && trk.TruckNumber == id);
+
+                return View(truck);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            
+
+        }
+        [HttpPost]
+        public  ActionResult UpdateTruck(Truck truck)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    db.Entry(truck).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("DisplayMessage", "Home", new { msg = "Your truck has been suuccessfully updated", act = "Index", ctrl = "Manager", isinput = false, });
+
+                }
+                catch (DbEntityValidationException e)
+                {
+                    foreach (var eve in e.EntityValidationErrors)
+                    {
+                        Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                            eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                        foreach (var ve in eve.ValidationErrors)
+                        {
+                            Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                                ve.PropertyName, ve.ErrorMessage);
+                        }
+                    }
+                    throw;
+                }
+            }
             return View();
         }
+        public ActionResult DeleteTruck(string id)
+        {
+            if (Session["UserId"] != null && Session["UserRole"].ToString() == "manager")
+            {
+                try
+                {
+                    Request isTruckinRequest = db.Requests.FirstOrDefault(req => req.TruckNumber == id);
+                    if (isTruckinRequest==null)
+                    {
+                        Truck truck = db.Trucks.FirstOrDefault(trk => trk.TruckNumber == id);
+                        db.Trucks.Remove(truck);
+                        db.SaveChanges();
+                        return RedirectToAction("DisplayMessage", "Home", new { msg = " Your truck has successfully deleted!", act = "Index", ctrl = "Manager", isinput = false, });
+
+                    }
+                    else
+                    {
+                        return RedirectToAction("DisplayMessage", "Home", new { msg = "This truck has booking Request, so you can't delete this truck", act = "Index", ctrl = "Manager", isinput = false, });
+                    }
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+        }
+        public ActionResult EnableTruck(string truckNumber)
+        {
+            if (Session["UserId"] != null && Session["UserRole"].ToString() == "manager")
+            {
+                try
+                {
+                    Truck truck = db.Trucks.FirstOrDefault(trk=>trk.TruckNumber==truckNumber);
+                    truck.TruckStatus = true;
+                    db.SaveChanges();
+                    return RedirectToAction("DisplayMessage", "Home", new { msg = "Your truck has been suuccessfully Enabled for Bookings", act = "Index", ctrl = "Manager", isinput = false, });
+
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            
+        }
+        public ActionResult DisableTruck(string truckNumber)
+        {
+            if (Session["UserId"] != null && Session["UserRole"].ToString() == "manager")
+            {
+                try
+                {
+                    Truck truck = db.Trucks.FirstOrDefault(trk => trk.TruckNumber == truckNumber);
+                    truck.TruckStatus = false;
+                    db.SaveChanges();
+                    return RedirectToAction("DisplayMessage", "Home", new { msg = "Disabled Successfully. Your truck will not shown to users for Bookings", act = "Index", ctrl = "Manager", isinput = false, });
+
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+        }
+        public ActionResult BookingRequest()
+        {
+            if (Session["UserId"] != null && Session["UserRole"].ToString() == "manager")
+            {
+                string mngrId = Session["UserId"].ToString();
+                List<Request> requests = db.Requests.Where(req => req.ManagerId == mngrId && req.RequestStatus==false && req.AcceptStatus==false).ToList();
+                if (requests.Count()!=0)
+                {
+                    return View(requests);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Manager");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+        }
+
+        public ActionResult AcceptBookingRequest(string requestId)
+        {
+            if (Session["UserId"] != null && Session["UserRole"].ToString() == "manager")
+            {
+                int reqid = Convert.ToInt32(requestId);
+                Request request = db.Requests.FirstOrDefault(req => req.RequestId == reqid);
+                if (request != null)
+                {
+                    try
+                    {
+                        request.RequestStatus = true;
+                        request.Description = "Successfully booked";
+                        db.SaveChanges();
+                        return RedirectToAction("DisplayMessage", "Home", new { msg = "Booked Successfully!!!", act = "BookingRequest", ctrl = "Manager", isinput = false });
+
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
+                    }
+                }
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Manager");
+            }
+        }
+        public ActionResult RejectBookingRequest(string requestId)
+        {
+            if (Session["UserId"] != null && Session["UserRole"].ToString() == "manager")
+            {
+                int reqid = Convert.ToInt32(requestId);
+                Request request = db.Requests.FirstOrDefault(req => req.RequestId == reqid);
+                if (request != null)
+                {
+                    try
+                    {
+                        return RedirectToAction("DisplayMessage", "Home", new { msg = "Are you really want to reject??", act = "RejectBookingRequest", ctrl = "Manager", isinput = true, id = requestId });
+
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
+                    }
+                }
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Manager");
+            }
+        }
+        [HttpPost]
+        public ActionResult RejectBookingRequest(Message message)
+        {
+            if (message.Inputdata != null && message.Id != null)
+            {
+                int msgId = Convert.ToInt32(message.Id);
+                Request request = db.Requests.FirstOrDefault(req => req.RequestId == msgId);
+
+                if (request != null)
+                {
+                    request.Description = message.Inputdata;
+                    request.RequestStatus = false;
+                    request.AcceptStatus = true;
+                    db.SaveChanges();
+
+                    return RedirectToAction("BookingRequest");
+
+                }
+            }
+            return View();
+        }
+
+
+
     }
 }

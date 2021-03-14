@@ -9,5 +9,9 @@ namespace BookMyTruck.Models
     {
         public string DispalyMessage { get; set; }
         public string ToAction { get; set; }
+        public string ToControl { get; set; }
+        public bool IsInput { get; set; }
+        public string Id { get; set; }
+        public string Inputdata { get; set; }
     }
 }

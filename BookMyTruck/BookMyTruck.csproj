@@ -266,6 +266,7 @@
     <Compile Include="Models\GetCustomerPlaces.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Message.cs" />
+    <Compile Include="Models\MyTruck.cs" />
     <Compile Include="Models\UserMobile.cs" />
     <Compile Include="Models\UserRegister.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -295,6 +296,16 @@
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Scripts\modernizr-2.8.3.min.js" />
     <Content Include="Views\Home\DisplayMessage.cshtml" />
+    <Content Include="Views\Manager\Index.cshtml" />
+    <Content Include="Views\Admin\ManagerRequests.cshtml" />
+    <Content Include="Views\Shared\_ManagerLayout.cshtml" />
+    <Content Include="Views\Manager\todelete.cshtml" />
+    <Content Include="Views\Manager\AddTruck.cshtml" />
+    <Content Include="Views\Manager\UpdateTruck.cshtml" />
+    <Content Include="Views\Shared\_UserLayout.cshtml" />
+    <Content Include="Views\Customer\ShowAvaliableTrucks.cshtml" />
+    <Content Include="Views\Customer\MyBookings.cshtml" />
+    <Content Include="Views\Manager\BookingRequest.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -305,8 +316,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\images\" />
-    <Folder Include="Views\Customer\" />
-    <Folder Include="Views\Manager\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />

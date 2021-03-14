@@ -19,10 +19,11 @@ namespace BookMyTruck
         public string ManagerId { get; set; }
         public string PickupCity { get; set; }
         public string DropCity { get; set; }
-        public System.DateTime EstimatedStartDate { get; set; }
-        public int Distance { get; set; }
         public double EstimatedCost { get; set; }
         public bool RequestStatus { get; set; }
+        public string TruckNumber { get; set; }
+        public string Description { get; set; }
+        public bool AcceptStatus { get; set; }
     
         public virtual User User { get; set; }
         public virtual User User1 { get; set; }

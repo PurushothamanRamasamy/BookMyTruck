@@ -11,8 +11,7 @@ namespace BookMyTruck
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class User
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -24,13 +23,15 @@ namespace BookMyTruck
             this.Services1 = new HashSet<Service>();
             this.Trucks = new HashSet<Truck>();
         }
-
+    
         public string Mobile { get; set; }
         public string UserId { get; set; }
         public string DisplayName { get; set; }
         public string UserRole { get; set; }
         public Nullable<bool> UserStatus { get; set; }
         public string Password { get; set; }
+        public bool ValidUser { get; set; }
+        public string Description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Request> Requests { get; set; }

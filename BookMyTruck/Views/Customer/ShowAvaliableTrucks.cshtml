@@ -1,0 +1,103 @@
+﻿@model IEnumerable<BookMyTruck.Truck>
+
+@{
+    ViewBag.Title = "ShowAvaliableTrucks";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h2 class="text-center font-weight-bold" style="margin-top:10px;margin-bottom:20px;color:#150941">Available truks for you</h2>
+
+
+
+<div>
+    <div class="container row ">
+        @{
+            if (Model.Count()!=0)
+            {
+                foreach (var item in Model)
+                {
+                    if (Model.Count() == 1)
+                    {
+                        <div class="col-4"></div>
+                    }
+                    <div class="col-4" style="margin-top:10px;margin-bottom:10px">
+                        <div class="card" style="background-color:white !important;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-6 text-dark font-weight-bold">
+                                        @Html.DisplayNameFor(model => model.TruckNumber) :
+                                    </div>
+                                    <div class="col-6 text-left text-uppercase">
+                                        @Html.DisplayFor(modelItem => item.TruckNumber)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-6 text-dark font-weight-bold">
+                                        @Html.DisplayNameFor(model => model.DriverName) :
+                                    </div>
+                                    <div class="col-6 text-left text-capitalize">
+                                        @Html.DisplayFor(modelItem => item.DriverName)
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top:5px">
+                                    <div class="col-6 text-dark font-weight-bold">
+                                        @Html.DisplayNameFor(model => model.PickCity) :
+                                    </div>
+                                    <div class="col-6 text-left">
+                                        @Html.DisplayFor(modelItem => item.PickCity)
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top:5px">
+                                    <div class="col-6 text-dark font-weight-bold">
+                                        @Html.DisplayNameFor(model => model.DropCity) :
+                                    </div>
+                                    <div class="col-6 text-left">
+                                        @Html.DisplayFor(modelItem => item.DropCity)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="text-left text-success">
+                                            @Html.DisplayNameFor(model => model.CostPerKM)
+                                        </div>
+                                        <div class="text-left">
+                                            Rs: @Html.DisplayFor(modelItem => item.CostPerKM)
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div>
+                                            @Html.ActionLink("Book", "BookTruck", new { trucknumber= item.TruckNumber,userid= Session["UserId"].ToString() }, htmlAttributes: new { @class = "btn btn-danger", @style = "margin-bottom:10px" })
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    if (Model.Count() == 1)
+                    {
+                        <div class="col-4"></div>
+                    }
+                }
+            }
+            else
+            {
+                <div class="col-12 text-center" style="margin-top:70px">
+                    <h3 class="text-danger font-italic font-weight-bold ">
+                        No records found !!! <br /> Kindly choose another options
+                    </h3>
+                </div>
+            }
+        }
+    </div>
+
+</div>
+
+     @*       @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+     *@

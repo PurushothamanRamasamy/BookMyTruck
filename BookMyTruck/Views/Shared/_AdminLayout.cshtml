@@ -33,28 +33,35 @@
                         <hr style="background-color:white !important" />
                     </div>
 
-                    @*<div href="./" class="nav-link">Link</div>
-                        <div href="./" class="nav-link">Link</div>
-                        <div href="./" class="nav-link">Link</div>
-                        <div href="./" class="nav-link">Link</div>
-                        <div href="./" class="nav-link">Link</div>
-                    *@
+                    <a href="/Admin/Admindashboard" class="nav-link bg-light text-danger" style="border-radius:5px">View All Services</a>
+                    <div href="./" class="nav-link">Link</div>
+                    <div href="./" class="nav-link">Link</div>
+                    <div href="./" class="nav-link">Link</div>
+                    <div href="./" class="nav-link">Link</div>
+                    
                 </div>
 
             </div>
             <div class="col-10 offset-2" id="main">
-                <nav class="navbar justify-content-end" style="margin-left:5px;margin-top:10px;margin-right:-10px;background-color: #150941;padding:10px;border-radius:10px">
+                <nav class="navbar justify-content-end" style="margin-left:5px;margin-top:10px;margin-right:-10px;background-color: #150941;padding:20px;border-radius:10px">
 
                     <ul class="nav ">
 
 
-                        <li class="nav-item" style="margin-right:50px">
-                            <button type="button" class="btn btn-danger">
-                                Notifications <span class="badge badge-light">7</span>
-                            </button>
+                        <li class="nav-item" style="margin-right:50px;position: relative;">
+                            @{
+                                if (Convert.ToInt32(TempData.Peek("managerRequests"))!=0)
+                                {
+                                    @Html.ActionLink("Requests", "ManagerRequests", null, htmlAttributes: new { @class = "btn btn-danger" })
+                            <span class="" style="position:absolute;top:-20px;right:-20px;padding:2px 10px;border-radius:50%;background-color:white">
+                                @Convert.ToInt32(TempData.Peek("managerRequests"))
+                            </span>
+                                }
+                            }
+
                         </li>
                         <li class="nav-item">
-                            <a href="/Home/Logout" class="btn font-weight-bold" style="background-color:#ffffff;color:#150941">Logout</a>
+                            <a href="/Home/Logout" class="btn font-weight-bold btn-outline-light">Logout</a>
                         </li>
                     </ul>
 

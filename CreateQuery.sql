@@ -2,7 +2,14 @@ Create database BookMyTruckDB
 
 use BookMyTruckDB
 
-insert into Users values('9344418426','Admin','Admin','Admin',1,'admin')
+select*from truck
+select*from users
+select*from Request
+select*from Service
+
+delete from Users where mobile='9095525796'
+delete from Users where mobile='8124878350'
+insert into Users values('8124878350','Purushothaman8124878350','Purushothaman','manager',0,'1234',0,'No Issues')
 create table Users(
 Mobile varchar(10) not null unique ,
 UserId varchar(35) not null Primary key,
@@ -12,6 +19,12 @@ UserStatus bit default 0,
 Password varchar(25) not null
 );
 
+alter table  Users add  ValidUser bit not null default 0
+alter table  Request drop column Distance 
+
+
+ add  Description varchar(max) not null,
+  
 
 create table Truck(
 TruckNumber varchar(10) not null primary key,
@@ -25,7 +38,9 @@ MaxCapacity int not null,
 CostPerKM float not null,
 TruckStatus bit not null default 0,
 );
-
+insert into truck values ('1234567890','TataAce','Purushothaman8124878350','Pro','123456789012345','Salem, Tamil Nadu, India','Chennai, Tamil Nadu, India','1','10000','false','false')
+alter table truck alter column MaxCapacity float not null
+alter table  Truck add  BookedStatus bit not null default 0
 
 
 Create Table Service(

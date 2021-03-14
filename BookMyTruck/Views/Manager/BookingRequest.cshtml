@@ -1,0 +1,60 @@
+﻿@model IEnumerable<BookMyTruck.Request>
+
+@{
+    ViewBag.Title = "BookingRequest";
+    Layout = "~/Views/Shared/_ManagerLayout.cshtml";
+}
+
+<div class="card" style="width: 1200px !important; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;">
+    <h2 class="text-danger text-center font-weight-bold" style="margin-bottom:20px">
+        Booking Requests
+    </h2>
+    <div class="table-responsive">
+
+        <table class="table table-striped" style="width:1200px">
+            <tr class="bg-danger text-light">
+                <th>
+                    @Html.DisplayNameFor(model => model.CustomerId)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.PickupCity)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DropCity)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EstimatedCost)
+                </th>
+
+                <th>Action</th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CustomerId)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PickupCity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DropCity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EstimatedCost)
+                    </td>
+
+                    <td>
+                        @Html.ActionLink("Accept", "AcceptBookingRequest", new { requestId = item.RequestId }, htmlAttributes: new { @class = "btn-sm btn-success" })
+                        @Html.ActionLink("Reject", "RejectBookingRequest", new { requestId = item.RequestId }, htmlAttributes: new { @class = "btn-sm btn-danger" })
+
+                    </td>
+                </tr>
+            }
+
+        </table>
+        </div>
+</div>

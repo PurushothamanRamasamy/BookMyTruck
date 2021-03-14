@@ -20,18 +20,32 @@ namespace BookMyTruck.Controllers
         [HttpPost]
         public ActionResult Index(GetCustomerPlaces getCustomer)
         {
-
-            if (ModelState.IsValid)
+            if (Session["UserId"] != null)
             {
-                ModelState.Clear();
-                /*have to comment*/
-                ViewBag.ddlTruckType = dropdownlist.TruckTypeList;
-                ViewBag.Rmessage = getCustomer.PickUp + ", " + getCustomer.Drop + ", " + getCustomer.Type;
-                return View();
-            }
+                if (ModelState.IsValid)
+                {
 
-            ViewBag.ddlTruckType = dropdownlist.TruckTypeList;
-            return View();
+                    return RedirectToAction("ShowAvaliableTrucks", "Customer", new { pickupCity = getCustomer.PickUp, dropCity = getCustomer.Drop, truckType = getCustomer.Type });
+                }
+                else
+                {
+                    
+                    ViewBag.ddlTruckType = dropdownlist.TruckTypeList;
+                    return View();
+                }
+                
+            }
+            else
+            {
+
+                TempData["userPickUp"] = getCustomer.PickUp;
+                TempData["userDrop"] = getCustomer.Drop;
+                TempData["userType"] = getCustomer.Type;
+                return RedirectToAction("ValidateUser", "Home");
+            }
+            
+
+            
         }
         public ActionResult ValidateUser()
         {
@@ -57,9 +71,30 @@ namespace BookMyTruck.Controllers
                             if (user.UserRole == "Admin")
                             {
                                 Session["UserId"] = user.UserId;
+                                Session["UserRole"] = user.UserRole;
                                 Response.Cache.SetCacheability(HttpCacheability.NoCache);
-                                return RedirectToAction("Admindashboard", "Admin");
+                                return RedirectToAction("Index", "Admin");
                             }
+                            if (user.UserRole == "customer")
+                            {
+                                Session["UserId"] = user.UserId;
+                                Session["UserRole"] = user.UserRole;
+                                List<Request> userrequest = db.Requests.Where(req => req.CustomerId == user.UserId && req.RequestStatus==true).ToList();
+                                TempData["myRequests"] = userrequest.Count();
+                                if (TempData.Peek("userPickUp") != null)
+                                {
+                                    return RedirectToAction("ShowAvaliableTrucks", "Customer", new { pickupCity = TempData.Peek("userPickUp"), dropCity = TempData.Peek("userDrop"), truckType = TempData.Peek("userType") });
+                                }
+
+                                return RedirectToAction("Index", "Home");
+                            }
+                            if (user.UserRole == "manager")
+                            {
+                                Session["UserId"] = user.UserId;
+                                Session["UserRole"] = user.UserRole;
+                                return RedirectToAction("Index", "Manager");
+                            }
+
                         }
                         else
                         {
@@ -87,8 +122,6 @@ namespace BookMyTruck.Controllers
         [HttpPost]
         public ActionResult Register(UserRegister registeredUser)
         {
-
-            //return registeredUser.Mobile + " " + registeredUser.DisplayName + " " + registeredUser.Password + " " + registeredUser.UserRole + " " + registeredUser.ConfirmPassword;
             if (ModelState.IsValid)
             {
                 try
@@ -101,10 +134,13 @@ namespace BookMyTruck.Controllers
                         adduser.DisplayName = registeredUser.DisplayName;
                         adduser.UserRole = "customer";
                         adduser.UserStatus = true;
+                        adduser.ValidUser = true;
                         adduser.Password = registeredUser.Password;
+                        adduser.Description = "No Issues";
                         db.Users.Add(adduser);
                         db.SaveChanges();
-                        return RedirectToAction("DisplayMessage", new { msg = "Succefully Registered", act = "Index" });
+                        Session["UserId"] = adduser.UserId;
+                        return RedirectToAction("DisplayMessage", new { msg = "Succefully Registered", act = "Index",ctrl="Home", isinput = false });
                     }
                     if (registeredUser.UserRole == "Add My Truck")
                     {
@@ -112,13 +148,15 @@ namespace BookMyTruck.Controllers
                         adduser.Mobile = registeredUser.Mobile;
                         adduser.UserId = registeredUser.DisplayName + registeredUser.Mobile;
                         adduser.DisplayName = registeredUser.DisplayName;
-                        adduser.UserRole = "Manager";
+                        adduser.UserRole = "manager";
                         adduser.UserStatus = false;
+                        adduser.ValidUser = false;
                         adduser.Password = registeredUser.Password;
+                        adduser.Description = "Admin will Response Kindly wait for sometime";
                         db.Users.Add(adduser);
                         db.SaveChanges();
-
-                        return RedirectToAction("DisplayMessage", new { message = "Your request will be approved soon. Kindly keep check on notification we will notify you", action = "Home/Index" });
+                        Session["UserId"] = adduser.UserId;
+                        return RedirectToAction("DisplayMessage", new { msg = "Your request will be approved soon. Kindly keep check on notification we will notify you", act = "Index", ctrl = "Manager", isinput=false });
                     }
                 }
                 catch (Exception ex)
@@ -130,11 +168,15 @@ namespace BookMyTruck.Controllers
             return View();
         }
 
-        public ActionResult DisplayMessage(string msg, string act)
+        public ActionResult DisplayMessage(string msg, string act,string ctrl,bool isinput,string id="")
         {
             Message message = new Message();
             message.DispalyMessage = msg;
             message.ToAction = act;
+            message.ToControl = ctrl;
+            message.IsInput = isinput;
+            message.Id = id;
+            message.Inputdata = "Invalid Credentials";
             return View(message);
         }
 
@@ -166,10 +208,6 @@ namespace BookMyTruck.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult ChooseRegister()
-        {
-            return View();
-        }
-
+        
     }
 }

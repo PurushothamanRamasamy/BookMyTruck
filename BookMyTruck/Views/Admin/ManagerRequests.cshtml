@@ -1,0 +1,46 @@
+﻿@model IEnumerable<BookMyTruck.User>
+
+@{
+    ViewBag.Title = "ManagerRequests";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Manager Requests</h2>
+
+
+<table class="table">
+    <tr>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.DisplayName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserRole)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Mobile)
+        </th>
+        <th>Action</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.DisplayName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserRole)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Mobile)
+        </td>
+        <td>
+            @Html.ActionLink("Accept", "SuccessManagerRequest", new { id=item.UserId },htmlAttributes:new { @class="btn-sm btn-success"}) 
+            @Html.ActionLink("Reject", "RejectManagerRequest", new { id=item.UserId }, htmlAttributes: new { @class = "btn-sm btn-danger" }) 
+            
+        </td>
+    </tr>
+}
+
+</table>
