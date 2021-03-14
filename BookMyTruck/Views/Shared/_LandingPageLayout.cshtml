@@ -43,8 +43,8 @@
                 <li class="nav-item" style="margin-left:80px">
                     <a href="~/Home/Index" class="btn btn-outline-danger">Home</a>
                 </li>
-                
-                
+
+
                 <li class="nav-item" style="margin-right:50px">
 
                 </li>
@@ -53,25 +53,38 @@
                 @{
                     if (Session["UserId"] != null)
                     {
-                        <li class="nav-item" style="margin-left:500px">
-                            @{ 
-                                if (Session["UserRole"].ToString()== "customer")
+                        <li class="nav-item" style="margin-left:400px">
+                            @{
+                                if (Session["UserRole"].ToString() == "customer")
                                 {
                                     <a href="/Customer/MyBookings" class="btn btn-danger">
-                                Bookings
-                                @{
-                                    if (Convert.ToInt32(TempData.Peek("myRequests")) != 0)
-                                    {
-                                        <span class="badge badge-light">
-                                            @Convert.ToInt32(TempData.Peek("myRequests"))
-                                        </span>
-                                    }
-                                }
+                                        Bookings
+                                        @{
+                                            if (Convert.ToInt32(TempData.Peek("myRequests")) != 0)
+                                            {
+                                                <span class="badge badge-light">
+                                                    @Convert.ToInt32(TempData.Peek("myRequests"))
+                                                </span>
+                                            }
+                                        }
 
-                            </a>
+                                    </a>
                                 }
                             }
-                            
+                        <li class="nav-item" style="margin-left:2px">
+                            @{
+                                if (Session["UserRole"].ToString() == "customer")
+                                {
+                                    <a href="/Customer/Serviced" class="btn btn-danger">
+                                        Serviced
+                                        
+
+                                    </a>
+                                }
+                            }
+
+                        </li>
+
                         </li>
                         <li class="nav-item" style="margin-left:10px">
                             <a href="/Home/Logout" class="btn btn-danger">Logout</a>

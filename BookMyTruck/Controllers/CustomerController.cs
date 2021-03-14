@@ -18,7 +18,7 @@ namespace BookMyTruck.Controllers
         {
             if (Session["UserId"]!=null)
             {
-                List<Truck> searchedTrucks = db.Trucks.Where(trk => trk.PickCity == pickupCity && trk.DropCity == dropCity && trk.TruckType == truckType).ToList();
+                List<Truck> searchedTrucks = db.Trucks.Where(trk => trk.PickCity == pickupCity && trk.DropCity == dropCity && trk.TruckType == truckType&&trk.BookedStatus==false&&trk.TruckStatus==true).ToList();
                 return View(searchedTrucks);
             }
             else
@@ -75,6 +75,21 @@ namespace BookMyTruck.Controllers
                 }
             }
             return View();
+
+        }
+        public ActionResult Serviced()
+        {
+            if (Session["UserId"] != null)
+            {
+                string userId = Session["UserId"].ToString();
+                List<Service> myServices = db.Services.Where(req => req.CustomerId == userId &&req.ServiceStatus==true ).ToList();
+
+                return View(myServices);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Admin");
+            }
 
         }
     }

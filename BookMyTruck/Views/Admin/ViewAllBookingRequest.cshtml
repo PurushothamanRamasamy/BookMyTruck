@@ -1,0 +1,124 @@
+﻿@model IEnumerable<BookMyTruck.Request>
+
+@{
+    ViewBag.Title = "ViewAllBookingRequest";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card" style="width: 1200px !important; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;">
+    <h2 class="text-danger text-center font-weight-bold" style="margin-bottom:20px">
+        List of Requests
+    </h2>
+    <div class="table-responsive">
+
+        <table class="table table-striped" style="width:1500px">
+            <tr class="bg-danger text-light">
+                <th>
+                    @Html.DisplayNameFor(model => model.RequestId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CustomerId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ManagerId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PickupCity)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DropCity)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EstimatedCost)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TruckNumber)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.RequestStatus)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.AcceptStatus)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+
+            </tr>
+            @{
+                if (Model.Count()!=0)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RequestId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CustomerId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ManagerId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PickupCity)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DropCity)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EstimatedCost)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TruckNumber)
+                            </td>
+                            <td>
+                                User Requested
+                            </td>
+                            <td>
+                                @{
+                                    if (item.AcceptStatus)
+                                    {
+                                        <div class="text-success">Cancelled by Manager</div>
+                                    }
+                                    else
+                                    {
+                                        if (item.RequestStatus)
+                                        {
+                                            <div class="text-danger">Approved</div>
+                                        }
+                                        else
+                                        {
+                                            <div class="text-warning">Manager not yet approved</div>
+                                        }
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+
+
+                        </tr>
+                    }
+
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="10">
+                            <center>
+                                <h2 class="text-danger font-italic font-weight-bold" style="margin-top:10%"> 404 <br />  Records Not Found !!!</h2>
+                            </center>
+                        </td>
+                    </tr>
+                }
+
+            }
+
+        </table>
+</div>
+</div>

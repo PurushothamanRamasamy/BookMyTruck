@@ -1,0 +1,86 @@
+﻿@model IEnumerable<BookMyTruck.Service>
+
+@{
+    ViewBag.Title = "Serviced";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<div style="margin-top:100px;padding:20px;border-radius:10px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;" class="card">
+    <h2 class="text-center" style="margin-bottom:50px">My Services</h2>
+    <table class="table table-striped">
+        <tr class="bg-danger text-light font-weight-bold">
+            <th>
+                @Html.DisplayNameFor(model => model.TruckNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PickupCity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DropCity)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ServiceEndDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SericeCost)
+            </th>
+
+
+            <th>
+                @Html.DisplayNameFor(model => model.ServiceStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+
+        </tr>
+        @{
+            if (Model.Count()!=0)
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TruckNumber)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PickupCity)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DropCity)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ServiceEndDate)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SericeCost)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ServiceStatus)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+
+                    </tr>
+                }
+
+            }
+            else
+            {
+                <tr>
+                    <td colspan="10">
+                        <center>
+                            <h2 class="text-danger font-italic font-weight-bold" style="margin-top:10%"> 404 <br /> Records Not Found !!!</h2>
+                        </center>
+                    </td>
+                </tr>
+            }
+        }
+
+    </table>
+    </div>

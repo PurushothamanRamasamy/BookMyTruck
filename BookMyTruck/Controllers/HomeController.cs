@@ -79,7 +79,7 @@ namespace BookMyTruck.Controllers
                             {
                                 Session["UserId"] = user.UserId;
                                 Session["UserRole"] = user.UserRole;
-                                List<Request> userrequest = db.Requests.Where(req => req.CustomerId == user.UserId && req.RequestStatus==true).ToList();
+                                List<Request> userrequest = db.Requests.Where(req => req.CustomerId == user.UserId && req.RequestStatus==false && req.AcceptStatus==false).ToList();
                                 TempData["myRequests"] = userrequest.Count();
                                 if (TempData.Peek("userPickUp") != null)
                                 {

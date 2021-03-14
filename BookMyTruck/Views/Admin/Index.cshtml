@@ -3,100 +3,108 @@
     {
         @model IEnumerable<BookMyTruck.Service>
 
-        
-            ViewBag.Title = "Index";
-            Layout = "~/Views/Shared/_AdminLayout.cshtml";
-        
 
-        <h2 class="text-danger font-weight-bold" style="margin-bottom:20px">List of services</h2>
+        ViewBag.Title = "Index";
+        Layout = "~/Views/Shared/_AdminLayout.cshtml";
 
 
-        <table class="table">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.CustomerId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ManagerId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PickupCity)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DropCity)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ServiceStartDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ServiceEndDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ServiceStatus)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.SericeCost)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ratings)
-                </th>
-                <th></th>
-            </tr>
+        <div class="card" style="width: 1200px !important; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;">
+            <h2 class="text-danger text-center font-weight-bold" style="margin-bottom:20px">
+                List of Services
+            </h2>
+            <div class="table-responsive">
 
-            @{
-                if (Model.Count() != 0)
-                {
-                    foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.CustomerId)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ManagerId)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.PickupCity)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.DropCity)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ServiceStartDate)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ServiceEndDate)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ServiceStatus)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.SericeCost)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ratings)
-                            </td>
-                            <td>
-                                @Html.ActionLink("Edit", "Edit", new { id = item.ServiceId }) |
-                                @Html.ActionLink("Details", "Details", new { id = item.ServiceId }) |
-                                @Html.ActionLink("Delete", "Delete", new { id = item.ServiceId })
-                            </td>
-                        </tr>
-                    }
+                <table class="table table-striped" style="width:1500px">
+                    <tr class="bg-danger text-light">
+                        <th>
+                            @Html.DisplayNameFor(model => model.CustomerId)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ManagerId)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.TruckNumber)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PickupCity)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DropCity)
+                        </th>
 
-                }
-                else
-                {
-                    <tr>
-                        <td colspan="10">
-                            <center>
-                                <h2 class="text-danger font-italic font-weight-bold" style="margin-top:10%"> 404 <br />  No Records Found !!!</h2>
-                            </center>
-                        </td>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ServiceEndDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ServiceStatus)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SericeCost)
+                        </th>
+
                     </tr>
-                }
-            }
-        </table>
 
+                    @{
+                        if (Model.Count() != 0)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CustomerId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ManagerId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TruckNumber)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PickupCity)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DropCity)
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ServiceEndDate)
+                                    </td>
+                                    <td>
+                                        @{
+                                            if (item.ServiceStatus)
+                                            {
+                                                <div class="text-success">Completed</div>
+                                            }
+                                            else
+                                            {
+                                                <div class="text-warning">Service taken</div>
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SericeCost)
+                                    </td>
+
+
+                                </tr>
+                            }
+
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="10">
+                                    <center>
+                                        <h2 class="text-danger font-italic font-weight-bold" style="margin-top:10%"> 404 <br />  Records Not Found !!!</h2>
+                                    </center>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </table>
+
+
+            </div>
+        </div>
     }
 }

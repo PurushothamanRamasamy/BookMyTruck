@@ -35,8 +35,8 @@
                     <div class="text-light" style="margin-top:20px">
                         <hr style="background-color:white !important" />
                     </div>
-                    @{ 
-                        if (Convert.ToInt32(TempData.Peek("bookingrRequests"))!=0)
+                    @{
+                        if (Convert.ToInt32(TempData.Peek("bookingrRequests")) != 0)
                         {
                             <div class="nav-item" style="padding-top:15px;padding-bottom:5px">
                                 <a href="/Manager/BookingRequest" class="nav-link bg-success text-light font-weight-bolder" style="border-radius:5px">
@@ -45,7 +45,7 @@
                                         @Convert.ToInt32(TempData.Peek("bookingrRequests"))
                                     </span>
                                 </a>
-                                
+
                             </div>
                         }
                     }
@@ -54,6 +54,9 @@
                     </div>
                     <div class="nav-item" style="padding-top:5px;padding-bottom:5px">
                         <a href="/Manager/AddTruck" class="nav-link bg-light text-danger font-weight-bolder " style="border-radius:5px">Add Trucks</a>
+                    </div>
+                    <div class="nav-item" style="padding-top:5px;padding-bottom:5px">
+                        <a href="/Manager/MyServices" class="nav-link bg-light text-danger font-weight-bolder " style="border-radius:5px">My Servicces</a>
                     </div>
                     <div class="nav-item text-center" style="margin-top:300px">
                         <a href="/Home/Logout" class="btn font-weight-bold btn-outline-light">Logout</a>

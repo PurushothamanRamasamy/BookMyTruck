@@ -53,21 +53,29 @@
             @{
                 if (Session["UserId"] != null)
                 {
-                        <li class="nav-item" style="margin-left:500px">
+                    <li class="nav-item" style="margin-left:400px">
 
-                            <a href="/Customer/MyBookings" class="btn btn-danger">
-                                Bookings
-                                @{
-                                    if (Convert.ToInt32(TempData.Peek("myRequests")) != 0)
-                                    {
-                                        <span class="badge badge-light">
-                                            @Convert.ToInt32(TempData.Peek("myRequests"))
-                                        </span>
-                                    }
+                        <a href="/Customer/MyBookings" class="btn btn-danger">
+                            Bookings
+                            @{
+                                if (Convert.ToInt32(TempData.Peek("myRequests")) != 0)
+                                {
+                                    <span class="badge badge-light">
+                                        @Convert.ToInt32(TempData.Peek("myRequests"))
+                                    </span>
                                 }
+                            }
 
-                            </a>
-                        </li>
+                        </a>
+                    </li>
+                    <li class="nav-item" style="margin-left:2px">
+
+                        <a href="/Customer/Serviced" class="btn btn-danger">
+                            Serviced
+                            
+
+                        </a>
+                    </li>
                     <li class="nav-item" style="margin-left:10px">
                         <a href="/Home/Logout" class="btn btn-danger">Logout</a>
                     </li>

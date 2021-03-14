@@ -306,6 +306,11 @@
     <Content Include="Views\Customer\ShowAvaliableTrucks.cshtml" />
     <Content Include="Views\Customer\MyBookings.cshtml" />
     <Content Include="Views\Manager\BookingRequest.cshtml" />
+    <Content Include="Views\Customer\Serviced.cshtml" />
+    <Content Include="Views\Manager\MyServices.cshtml" />
+    <Content Include="Views\Admin\ViewAllCutomer.cshtml" />
+    <Content Include="Views\Admin\ViewAllManager.cshtml" />
+    <Content Include="Views\Admin\ViewAllBookingRequest.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

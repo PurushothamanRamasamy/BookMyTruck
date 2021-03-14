@@ -56,24 +56,11 @@
 
 
                 @{
-                    if (Session["UserId"] != null)
-                    {
-                        <li class="nav-item" style="margin-left:500px">
-                            <button type="button" class="btn btn-danger">
-                                Notifications <span class="badge badge-light">7</span>
-                            </button>
-                        </li>
-                        <li class="nav-item" style="margin-left:10px">
-                            <a href="/Home/Logout" class="btn btn-danger">Logout</a>
-                        </li>
-                    }
-                    else
+                    if (Session["UserId"] == null)
                     {
                         <li class="nav-item" style="margin-left:600px">
                             <a href="~/Home/ValidateUser" class="btn btn-danger">Signin / Signup</a>
                         </li>
-
-
                     }
                 }
 

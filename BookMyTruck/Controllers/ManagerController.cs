@@ -238,12 +238,32 @@ namespace BookMyTruck.Controllers
             {
                 int reqid = Convert.ToInt32(requestId);
                 Request request = db.Requests.FirstOrDefault(req => req.RequestId == reqid);
+                Service service = new Service();
+                Truck truck = db.Trucks.FirstOrDefault(trk => trk.TruckNumber == request.TruckNumber);
                 if (request != null)
                 {
                     try
                     {
+                        truck.BookedStatus = true;
+
                         request.RequestStatus = true;
+                        request.AcceptStatus = false;
                         request.Description = "Successfully booked";
+                        
+                        service.CustomerId = request.CustomerId;
+                        service.ManagerId = request.ManagerId;
+                        service.PickupCity = request.PickupCity;
+                        service.DropCity = request.DropCity;
+                        service.ServiceEndDate = System.DateTime.Now;
+                        service.ServiceStatus = false;
+                        service.SericeCost = request.EstimatedCost;
+                        service.ratings = 0;
+                        service.TruckNumber = request.TruckNumber;
+                        service.Description = "Service Started";
+
+
+
+                        db.Services.Add(service);
                         db.SaveChanges();
                         return RedirectToAction("DisplayMessage", "Home", new { msg = "Booked Successfully!!!", act = "BookingRequest", ctrl = "Manager", isinput = false });
 
@@ -309,6 +329,45 @@ namespace BookMyTruck.Controllers
             return View();
         }
 
+        public ActionResult MyServices()
+        {
+            if (Session["UserId"] != null && Session["UserRole"].ToString() == "manager")
+            {
+                string mngrId = Session["UserId"].ToString();
+                List<Service> services = db.Services.Where(service => service.ManagerId == mngrId).ToList();
+                return View(services);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+        
+        public ActionResult CompleteService(int serviceId)
+        {
+            if (Session["UserId"] != null && Session["UserRole"].ToString() == "manager")
+            {
+
+                try
+                {
+                    Service completeService = db.Services.FirstOrDefault(service => service.ServiceId == serviceId);
+                    completeService.ServiceEndDate = System.DateTime.Now;
+                    completeService.Description = "Completed";
+                    completeService.ServiceStatus = true;
+                    db.SaveChanges();
+                    return RedirectToAction("MyServices", "Manager");
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
 
 
     }

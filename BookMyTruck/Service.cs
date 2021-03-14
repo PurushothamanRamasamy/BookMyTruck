@@ -19,9 +19,8 @@ namespace BookMyTruck
         public string ManagerId { get; set; }
         public string PickupCity { get; set; }
         public string DropCity { get; set; }
-        public System.DateTime ServiceStartDate { get; set; }
         public Nullable<System.DateTime> ServiceEndDate { get; set; }
-        public string ServiceStatus { get; set; }
+        public bool ServiceStatus { get; set; }
         public double SericeCost { get; set; }
         public Nullable<int> ratings { get; set; }
         public string TruckNumber { get; set; }

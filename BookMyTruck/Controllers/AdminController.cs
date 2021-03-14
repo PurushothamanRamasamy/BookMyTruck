@@ -17,7 +17,7 @@ namespace BookMyTruck.Controllers
         {
             if (Session["UserId"] != null)
             {
-                List<Service> services = new List<Service>();
+                List<Service> services = db.Services.ToList();
                 TempData["managerRequests"] = db.Users.Where(usr => usr.UserRole == "manager" && usr.ValidUser == false && usr.UserStatus == false).Count(); ;
                 return View(services);
             }
@@ -108,11 +108,41 @@ namespace BookMyTruck.Controllers
             }
             return View();
         }
-
-        [HttpPost]
-        public  string demo()
+        public ActionResult ViewAllCutomer()
         {
-            return "Succes";
+            if (Session["UserId"] != null && Session["UserRole"].ToString() == "Admin")
+            {
+                List<User> customers = db.Users.Where(usr => usr.UserRole == "customer").ToList();
+                return View(customers);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+        public ActionResult ViewAllManager()
+        {
+            if (Session["UserId"] != null && Session["UserRole"].ToString() == "Admin")
+            {
+                List<User> customers = db.Users.Where(usr => usr.UserRole == "manager").ToList();
+                return View(customers);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+        public ActionResult ViewAllBookingRequest()
+        {
+            if (Session["UserId"] != null && Session["UserRole"].ToString() == "Admin")
+            {
+                List<Request> allRequests = db.Requests.ToList();
+                return View(allRequests);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
     }

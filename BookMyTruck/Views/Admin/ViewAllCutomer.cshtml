@@ -1,0 +1,82 @@
+﻿@model IEnumerable<BookMyTruck.User>
+
+@{
+    ViewBag.Title = "ViewAllCutomer";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card" style="padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;">
+    <h2 class="text-danger text-center font-weight-bold" style="margin-bottom:20px">
+        List of Customers
+    </h2>
+    <div class="table-responsive">
+
+        <table class="table table-striped" style="width:1000px">
+            <tr class="bg-danger text-light">
+                <th>
+                    @Html.DisplayNameFor(model => model.UserId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Mobile)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DisplayName)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.UserStatus)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.ValidUser)
+                </th>
+
+
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Mobile)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DisplayName)
+                    </td>
+
+                    <td>
+                        @{
+                            if (item.UserStatus == true)
+                            {
+                                <div class="text-success">Active</div>
+                            }
+                            else
+                            {
+                                <div class="text-warning">Not Active</div>
+                            }
+                        }
+                    </td>
+
+                    <td>
+                        @{
+                            if (item.ValidUser == true)
+                            {
+                                <div class="text-success">Valid User</div>
+                            }
+                            else
+                            {
+                                <div class="text-warning">InValid User</div>
+                            }
+                        }
+                    </td>
+
+                    
+                </tr>
+            }
+
+        </table>
+        </div>
+</div>

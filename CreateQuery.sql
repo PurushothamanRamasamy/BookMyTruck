@@ -8,7 +8,8 @@ select*from Request
 select*from Service
 
 delete from Users where mobile='9095525796'
-delete from Users where mobile='8124878350'
+delete from Service where customerid='Purushothaman9095525796'
+
 insert into Users values('8124878350','Purushothaman8124878350','Purushothaman','manager',0,'1234',0,'No Issues')
 create table Users(
 Mobile varchar(10) not null unique ,
@@ -19,8 +20,8 @@ UserStatus bit default 0,
 Password varchar(25) not null
 );
 
-alter table  Users add  ValidUser bit not null default 0
-alter table  Request drop column Distance 
+alter table  Request add  AcceptStatus bit not null default 0
+alter table  Service drop column ServiceStartDate 
 
 
  add  Description varchar(max) not null,
@@ -40,9 +41,9 @@ TruckStatus bit not null default 0,
 );
 insert into truck values ('1234567890','TataAce','Purushothaman8124878350','Pro','123456789012345','Salem, Tamil Nadu, India','Chennai, Tamil Nadu, India','1','10000','false','false')
 alter table truck alter column MaxCapacity float not null
-alter table  Truck add  BookedStatus bit not null default 0
+alter table  Service alter column  ServiceStatus bit not null
 
-
+update  truck  set BookedStatus=0 where truckNumber='tn29ay1213'
 Create Table Service(
 ServiceId int not null identity(1,1) primary Key,
 CustomerId varchar(35) not null foreign key references Users(UserId),
