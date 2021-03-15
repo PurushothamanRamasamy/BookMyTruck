@@ -33,53 +33,66 @@
 
         </tr>
 
-        @foreach (var item in Model)
-        {
-    <tr>
-        <td class="text-uppercase">
-            @Html.DisplayFor(modelItem => item.TruckNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PickupCity)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DropCity)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EstimatedCost)
-        </td>
-        <td>
-            @{
-                if (item.RequestStatus)
+        
+        @{
+            if (Model.Count()!=0)
+            {
+                foreach (var item in Model)
                 {
-                    <p class="text-success">Accepted</p>
-                }
-                else
-                {
-                    <p class="text-warning">Requested</p>
+                    <tr>
+                        <td class="text-uppercase">
+                            @Html.DisplayFor(modelItem => item.TruckNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PickupCity)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DropCity)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EstimatedCost)
+                        </td>
+                        <td>
+                            @{
+                                if (item.RequestStatus)
+                                {
+                                    <p class="text-success">Accepted</p>
+                                }
+                                else
+                                {
+                                    <p class="text-warning">Requested</p>
+                                }
+                            }
+
+                        </td>
+                        <td>
+                            @{
+                                if (item.Description == "Your Booking is under Processing")
+                                {
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                }
+                                else
+                                {
+                                    <p class="text-danger">
+                                        @Html.DisplayFor(modelItem => item.Description)
+                                    </p>
+                                }
+                            }
+
+                        </td>
+
+                    </tr>
                 }
             }
-
-        </td>
-        <td>
-            @{
-                if (item.Description == "Your Booking is under Processing")
-                {
-                    @Html.DisplayFor(modelItem => item.Description)
-                }
-                else
-                {
-                     <p class="text-danger">
-                        @Html.DisplayFor(modelItem => item.Description) 
-                     </p>
-                }
+            else
+            {
+                <tr class="col-12 text-center" >
+                    <td class="text-danger font-italic font-weight-bold " colspan="6" style="padding-top:100px">
+                        <h3>No records found !!! </h3>
+                    </td>
+                </tr>
             }
-
-        </td>
-
-    </tr>
         }
-
     </table>
 
 </div>

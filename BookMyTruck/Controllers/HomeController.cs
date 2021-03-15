@@ -20,29 +20,30 @@ namespace BookMyTruck.Controllers
         [HttpPost]
         public ActionResult Index(GetCustomerPlaces getCustomer)
         {
-            if (Session["UserId"] != null)
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                if (Session["UserId"] != null)
                 {
 
                     return RedirectToAction("ShowAvaliableTrucks", "Customer", new { pickupCity = getCustomer.PickUp, dropCity = getCustomer.Drop, truckType = getCustomer.Type });
                 }
                 else
                 {
-                    
-                    ViewBag.ddlTruckType = dropdownlist.TruckTypeList;
-                    return View();
+
+                    TempData["userPickUp"] = getCustomer.PickUp;
+                    TempData["userDrop"] = getCustomer.Drop;
+                    TempData["userType"] = getCustomer.Type;
+                    return RedirectToAction("ValidateUser", "Home");
                 }
-                
+
             }
             else
             {
 
-                TempData["userPickUp"] = getCustomer.PickUp;
-                TempData["userDrop"] = getCustomer.Drop;
-                TempData["userType"] = getCustomer.Type;
-                return RedirectToAction("ValidateUser", "Home");
+                ViewBag.ddlTruckType = dropdownlist.TruckTypeList;
+                return View();
             }
+            
             
 
             

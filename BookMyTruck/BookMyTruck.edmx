@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="BookMyTruckDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="BookMyTruckDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Request">
           <Key>
             <PropertyRef Name="RequestId" />
@@ -41,7 +41,7 @@
             <PropertyRef Name="TruckNumber" />
           </Key>
           <Property Name="TruckNumber" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="TruckType" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="TruckType" Type="varchar(max)" />
           <Property Name="ManagerId" Type="varchar" MaxLength="35" Nullable="false" />
           <Property Name="DriverName" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="DriverLicenceNumber" Type="varchar" MaxLength="15" Nullable="false" />
@@ -151,8 +151,7 @@
             <End Role="Truck" EntitySet="Truck" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BookMyTruckDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -196,7 +195,7 @@
             <PropertyRef Name="TruckNumber" />
           </Key>
           <Property Name="TruckNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="TruckType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TruckType" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="ManagerId" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="DriverName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="DriverLicenceNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />

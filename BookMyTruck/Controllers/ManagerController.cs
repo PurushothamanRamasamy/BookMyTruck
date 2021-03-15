@@ -55,24 +55,28 @@ namespace BookMyTruck.Controllers
 
                         addtruck.TruckStatus = false;
                         addtruck.BookedStatus = false;
+                        addtruck.ManagerId = Convert.ToString(Session["UserId"]);
                         db.Trucks.Add(addtruck);
                        
                         db.SaveChanges();
                         return RedirectToAction("DisplayMessage", "Home", new { msg = "Your truck added suuccessfully,kindly enable your truck to provide Service", act = "Index", ctrl = "Manager", isinput = false, });
                     }
-                    catch (DbEntityValidationException e)
+                    catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
                     {
-                        foreach (var eve in e.EntityValidationErrors)
+                        Exception raise = dbEx;
+                        foreach (var validationErrors in dbEx.EntityValidationErrors)
                         {
-                            Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-                                eve.Entry.Entity.GetType().Name, eve.Entry.State);
-                            foreach (var ve in eve.ValidationErrors)
+                            foreach (var validationError in validationErrors.ValidationErrors)
                             {
-                                Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
-                                    ve.PropertyName, ve.ErrorMessage);
+                                string message = string.Format("{0}:{1}",
+                                    validationErrors.Entry.Entity.ToString(),
+                                    validationError.ErrorMessage);
+                                // raise a new exception nesting  
+                                // the current instance as InnerException  
+                                raise = new InvalidOperationException(message, raise);
                             }
                         }
-                        throw;
+                        throw raise;
                     }
 
                 }
@@ -369,6 +373,10 @@ namespace BookMyTruck.Controllers
             }
         }
 
-
+        public JsonResult IsTuckExixts(string truckNumber)
+        {
+            bool isExist = db.Trucks.Where(u => u.TruckNumber.ToLowerInvariant().Equals(truckNumber.ToLower())).FirstOrDefault() != null;
+            return Json(!isExist, JsonRequestBehavior.AllowGet);
+        }
     }
 }
