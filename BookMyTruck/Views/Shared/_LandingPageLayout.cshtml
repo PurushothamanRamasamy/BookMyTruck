@@ -53,7 +53,10 @@
                 @{
                     if (Session["UserId"] != null)
                     {
-                        <li class="nav-item" style="margin-left:400px">
+                        <li class="text-success nav-item">
+                          Welcome  @Session["UserName"].ToString()
+                        </li>
+                        <li class="nav-item" style="margin-left:300px">
                             @{
                                 if (Session["UserRole"].ToString() == "customer")
                                 {
@@ -77,7 +80,7 @@
                                 {
                                     <a href="/Customer/Serviced" class="btn btn-danger">
                                         Serviced
-                                        
+
 
                                     </a>
                                 }

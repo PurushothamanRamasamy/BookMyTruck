@@ -53,7 +53,10 @@
             @{
                 if (Session["UserId"] != null)
                 {
-                    <li class="nav-item" style="margin-left:400px">
+                    <li class="text-success nav-item">
+                        Welcome  @Session["UserName"].ToString()
+                    </li>
+                    <li class="nav-item" style="margin-left:300px">
 
                         <a href="/Customer/MyBookings" class="btn btn-danger">
                             Bookings
@@ -68,11 +71,12 @@
 
                         </a>
                     </li>
+
                     <li class="nav-item" style="margin-left:2px">
 
                         <a href="/Customer/Serviced" class="btn btn-danger">
                             Serviced
-                            
+
 
                         </a>
                     </li>

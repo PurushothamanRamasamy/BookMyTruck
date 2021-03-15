@@ -19,6 +19,7 @@ namespace BookMyTruck.Controllers
             if (Session["UserId"]!=null && Session["UserRole"].ToString()== "manager")
             {
                 string MngrId = Session["UserId"].ToString();
+                Session["IsValidManager"] = db.Users.FirstOrDefault(usr => usr.UserId==MngrId && usr.UserStatus == true && usr.ValidUser==true);
                 List<Truck> trucks = db.Trucks.Where(truck=>truck.ManagerId== MngrId).ToList();
                 List<Request> bookingrRequests = db.Requests.Where(req => req.ManagerId==MngrId && req.RequestStatus==false&&req.AcceptStatus==false).ToList();
                 TempData["bookingrRequests"] = bookingrRequests.Count();
@@ -375,7 +376,8 @@ namespace BookMyTruck.Controllers
 
         public JsonResult IsTuckExixts(string truckNumber)
         {
-            bool isExist = db.Trucks.Where(u => u.TruckNumber.ToLowerInvariant().Equals(truckNumber.ToLower())).FirstOrDefault() != null;
+            List<Truck> trucks = db.Trucks.Where(trk => trk.TruckNumber.ToLower() == truckNumber.ToLower()).ToList();
+            bool isExist = trucks.Count()!=0?true:false;
             return Json(!isExist, JsonRequestBehavior.AllowGet);
         }
     }

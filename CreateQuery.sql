@@ -7,7 +7,7 @@ select*from users
 select*from Request
 select*from Service
 
-delete from Users where mobile='9095525796'
+delete from Users where mobile=''
 delete from Service where customerid='Purushothaman9095525796'
 
 insert into Users values('8124878350','Purushothaman8124878350','Purushothaman','manager',0,'1234',0,'No Issues')

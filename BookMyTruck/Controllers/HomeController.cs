@@ -73,6 +73,7 @@ namespace BookMyTruck.Controllers
                             {
                                 Session["UserId"] = user.UserId;
                                 Session["UserRole"] = user.UserRole;
+                                Session["UserName"] = user.DisplayName;
                                 Response.Cache.SetCacheability(HttpCacheability.NoCache);
                                 return RedirectToAction("Index", "Admin");
                             }
@@ -80,6 +81,7 @@ namespace BookMyTruck.Controllers
                             {
                                 Session["UserId"] = user.UserId;
                                 Session["UserRole"] = user.UserRole;
+                                Session["UserName"] = user.DisplayName;
                                 List<Request> userrequest = db.Requests.Where(req => req.CustomerId == user.UserId && req.RequestStatus==false && req.AcceptStatus==false).ToList();
                                 TempData["myRequests"] = userrequest.Count();
                                 if (TempData.Peek("userPickUp") != null)
@@ -93,6 +95,7 @@ namespace BookMyTruck.Controllers
                             {
                                 Session["UserId"] = user.UserId;
                                 Session["UserRole"] = user.UserRole;
+                                Session["UserName"] = user.DisplayName;
                                 return RedirectToAction("Index", "Manager");
                             }
 
@@ -141,6 +144,8 @@ namespace BookMyTruck.Controllers
                         db.Users.Add(adduser);
                         db.SaveChanges();
                         Session["UserId"] = adduser.UserId;
+                        Session["UserRole"] = adduser.UserRole;
+                        Session["UserName"] = adduser.DisplayName;
                         return RedirectToAction("DisplayMessage", new { msg = "Succefully Registered", act = "Index",ctrl="Home", isinput = false });
                     }
                     if (registeredUser.UserRole == "Add My Truck")
@@ -157,7 +162,9 @@ namespace BookMyTruck.Controllers
                         db.Users.Add(adduser);
                         db.SaveChanges();
                         Session["UserId"] = adduser.UserId;
-                        return RedirectToAction("DisplayMessage", new { msg = "Your request will be approved soon. Kindly keep check on notification we will notify you", act = "Index", ctrl = "Manager", isinput=false });
+                        Session["UserRole"] = adduser.UserRole;
+                        Session["UserName"] = adduser.DisplayName;
+                        return RedirectToAction("DisplayMessage", new { msg = "Your request will be approved soon. Once you have approved you can able to", act = "Index", ctrl = "Manager", isinput=false });
                     }
                 }
                 catch (Exception ex)
@@ -166,6 +173,7 @@ namespace BookMyTruck.Controllers
                     throw ex;
                 }
             }
+            ViewBag.ddlRoles = dropdownlist.RoleList;
             return View();
         }
 
