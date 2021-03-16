@@ -126,8 +126,8 @@ namespace BookMyTruck.Controllers
         [HttpPost]
         public ActionResult Register(UserRegister registeredUser)
         {
-            if (ModelState.IsValid)
-            {
+            /*if (ModelState.IsValid)
+            {*/
                 try
                 {
                     if (registeredUser.UserRole == "Book Truck")
@@ -172,7 +172,7 @@ namespace BookMyTruck.Controllers
 
                     throw ex;
                 }
-            }
+            /*}*/
             ViewBag.ddlRoles = dropdownlist.RoleList;
             return View();
         }

@@ -9,7 +9,7 @@
     }
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="~/Scripts/jquery-3.5.1.min.js"></script>
 <script type="text/javascript"> 
     $(document).ready(function () {
         $("#txtLoginpassword").keypress(function () { $("#errorpassword").html(""); });
@@ -24,6 +24,8 @@
                 $("#errorpassword").html("Password Cannot be Empty");
             }
         });
+
+       
         $("#btnnext").click(function () {
             
             

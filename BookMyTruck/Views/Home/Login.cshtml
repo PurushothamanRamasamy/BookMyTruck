@@ -1,9 +1,9 @@
 ﻿
     @model BookMyTruck.Models.Login
 
-@{ 
-    Layout = null;
-}
+@*@{ 
+    Layout = "~/Views/Shared/_LoginandRegisterLayout.cshtml";
+}*@
 
     @using (Html.BeginForm("Login","Home"))
     {
@@ -21,7 +21,7 @@
         </div>
         <div class="col-md-10">
 
-            @Html.EditorFor(model => model.Mobile, new { htmlAttributes = new { @class = "form-control", @id = "txtMobile" } })
+            @Html.EditorFor(model => model.Mobile, new { htmlAttributes = new { @class = "form-control", @id = "txtMobile", @maxlength = "10" } })
             @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger", @id = "errormobile" })
         </div>
     </div>

@@ -12,7 +12,7 @@
         <div class="form-group" style="display:none">
             @Html.LabelFor(model => model.Mobile, htmlAttributes: new { @class = "control-label col-md-10" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Mobile, new { htmlAttributes = new { @class = "form-control",} })
+                @Html.EditorFor(model => model.Mobile, new { htmlAttributes = new { @class = "form-control", } })
                 @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -21,7 +21,7 @@
             @Html.LabelFor(model => model.DisplayName, htmlAttributes: new { @class = "control-label col-md-10" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.DisplayName, new { htmlAttributes = new { @class = "form-control", @id = "txtname", @maxlength = "25" } })
-                <div >
+                <div>
                     @Html.ValidationMessageFor(model => model.DisplayName, "", new { @class = "text-danger", @id = "nameerror" })
                 </div>
 
@@ -35,7 +35,7 @@
 
                 @Html.DropDownListFor(model => model.UserRole, new SelectList(ViewBag.ddlRoles, "Value", "Text"), "--- Select ---", htmlAttributes: new { @class = "form-control", @id = "txtrole" })
 
-                @Html.ValidationMessageFor(model => model.UserRole, "", new { @class = "text-danger",@id="roleerror"})
+                @Html.ValidationMessageFor(model => model.UserRole, "", new { @class = "text-danger", @id = "roleerror" })
             </div>
         </div>
 
@@ -43,7 +43,7 @@
             @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-10" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @id = "txtregisterpassword" } })
-                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger",@id= "registerpassworderror" })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger", @id = "registerpassworderror" })
             </div>
         </div>
 
@@ -69,33 +69,35 @@
 }
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript">
-    $("#txtname").keypress(function () { $("#nameerror").html(""); });
-    $("#txtrole").click(function () { $("#roleerror").html(""); });
-    $("#txtregisterpassword").keypress(function () { $("#registerpassworderror").html(""); });
-    $("#txtreenterpassword").keypress(function () { $("#errorrenerterpassword").html(""); });
-    $("#btnsignup").click(function () {
 
-        var regex = /\b.*[a-zA-Z]+.*\b/;
+    <script type="text/javascript">
+        $("#txtname").keypress(function () { $("#nameerror").html(""); });
+        $("#txtrole").click(function () { $("#roleerror").html(""); });
+        $("#txtregisterpassword").keypress(function () { $("#registerpassworderror").html(""); });
+        $("#txtreenterpassword").keypress(function () { $("#errorrenerterpassword").html(""); });
+        $("#btnsignup").click(function () {
 
-        if ($("#txtname").val().length == 0) {
-            $("#nameerror").html("Please enter name");
-        }
-        if (regex.test($("#txtname").val()) == false) {
-            $("#nameerror").html("Please enter Valid Name");
-        }
-        if ($("#txtrole").val().length == 0) {
-            $("#roleerror").html("Please select any one");
-        }
-        if ($("#txtregisterpassword").val().length == 0) {
-            $("#registerpassworderror").html("Please enter password");
-        }
+            var regex = /\b.*[a-zA-Z]+.*\b/;
 
-        if ($("#txtreenterpassword").val() != $("#txtregisterpassword").val()) {
-            $("#errorrenerterpassword").html("Password and Confirm Password are different");
-        }
-        else {
-            $("#btngetin").click();
-        }
-    });
-</script>
+            if ($("#txtname").val().length == 0) {
+                $("#nameerror").html("Please enter name");
+            }
+            if (regex.test($("#txtname").val()) == false) {
+                $("#nameerror").html("Please enter Valid Name");
+            }
+            if ($("#txtrole").val().length == 0) {
+                $("#roleerror").html("Please select any one");
+            }
+            if ($("#txtregisterpassword").val().length == 0) {
+                $("#registerpassworderror").html("Please enter password");
+            }
+
+            if ($("#txtreenterpassword").val() != $("#txtregisterpassword").val()) {
+                $("#errorrenerterpassword").html("Password and Confirm Password are different");
+            }
+            else if ($("#txtname").val().length != 0 && regex.test($("#txtname").val()) == true && ($("#txtrole").val().length != 0) && ($("#txtregisterpassword").val().length != 0) && ($("#txtreenterpassword").val() == $("#txtregisterpassword").val())) {
+                $("#btngetin").click();
+            }
+        });
+    </script>
+

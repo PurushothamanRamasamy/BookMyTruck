@@ -141,7 +141,7 @@ namespace BookMyTruck.Controllers
             {
                 try
                 {
-                    Request isTruckinRequest = db.Requests.FirstOrDefault(req => req.TruckNumber == id);
+                    Truck isTruckinRequest = db.Trucks.FirstOrDefault(req => req.BookedStatus == true);
                     if (isTruckinRequest==null)
                     {
                         Truck truck = db.Trucks.FirstOrDefault(trk => trk.TruckNumber == id);
@@ -319,9 +319,11 @@ namespace BookMyTruck.Controllers
             {
                 int msgId = Convert.ToInt32(message.Id);
                 Request request = db.Requests.FirstOrDefault(req => req.RequestId == msgId);
+                Truck truck = db.Trucks.FirstOrDefault(trk => trk.TruckNumber == request.TruckNumber);
 
                 if (request != null)
                 {
+                    truck.BookedStatus = false;
                     request.Description = message.Inputdata;
                     request.RequestStatus = false;
                     request.AcceptStatus = true;
@@ -374,9 +376,9 @@ namespace BookMyTruck.Controllers
             }
         }
 
-        public JsonResult IsTuckExixts(string truckNumber)
+        public JsonResult IsTuckExixts(string TruckNumber)
         {
-            List<Truck> trucks = db.Trucks.Where(trk => trk.TruckNumber.ToLower() == truckNumber.ToLower()).ToList();
+            List<Truck> trucks = db.Trucks.Where(trk => trk.TruckNumber.ToLower() == TruckNumber.ToLower()).ToList();
             bool isExist = trucks.Count()!=0?true:false;
             return Json(!isExist, JsonRequestBehavior.AllowGet);
         }
